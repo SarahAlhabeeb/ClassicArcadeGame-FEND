@@ -1,18 +1,18 @@
-
+'use strict';
 
 //Text displayed when player collides with enemy
-const loseText = "Oops";
+const LOSETEXT = "Oops";
 
 //Text displayed when player wins the game
-const winText = "YOU WON!";
+const WINTEXT = "YOU WON!";
 
 //Enemy class for all enemies in the game
 class Enemy {
-    constructor(a, b, c) {
+    constructor(x, y, speed) {
         this.sprite = 'images/enemy-bug.png';
-        this.x = a;
-        this.y = b;
-        this.speed = c;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
     }
 
     update(dt) {
@@ -33,10 +33,10 @@ class Enemy {
 
 //Player entity that could move one block
 class Player {
-    constructor(a, b) {
+    constructor(x, y) {
         this.sprite = 'images/char-boy.png';
-        this.x = a;
-        this.y = b;
+        this.x = x;
+        this.y = y;
     }
 
     update(dt) {
@@ -50,52 +50,65 @@ class Player {
         if (checkCollision()) {
             ctx.fillStyle = 'black';
             ctx.font = "30px Arial";
-            ctx.fillText(loseText, 505 / 3, player.y - 90 / 5.5);
+            ctx.fillText(LOSETEXT, 505 / 3, this.y - 90 / 5.5);
         }
 
         // if the player wins, a text will apear
-        if (win()) {
+        if (this.win()) {
             ctx.fillStyle = 'black';
             ctx.font = "30px Arial";
-            ctx.fillText(winText, 505 / 3, player.y + 200);
+            ctx.fillText(WINTEXT, 505 / 3, this.y + 200);
         }
     }
 
     // Handles key presses by calling the proper function
     handleInput(pressedKey) {
         switch (pressedKey) {
-            case 'left': player.moveLeft(); break;
-            case 'up': player.moveUp(); break;
-            case 'right': player.moveRight(); break;
-            case 'down': player.moveDown(); break;
+            case 'left': this.moveLeft(); break;
+            case 'up': this.moveUp(); break;
+            case 'right': this.moveRight(); break;
+            case 'down': this.moveDown(); break;
         }
     }
 
     moveRight() {
-        if (!(this.x > 405))
+        if (this.x < 405)
             this.x += 102;
     }
 
     moveLeft() {
-        if (!(this.x < 0))
+        if (this.x > 0)
             this.x -= 102;
     }
 
     moveUp() {
-        if (!(this.y < 0))
+        if (this.y > 0)
             this.y -= 83;
 
         if (this.y < 70) {
-            setTimeout(() => {
-                this.x = 202;
-                this.y = 402;
-            }, 500);
+            this.reset();
         }
     }
 
     moveDown() {
-        if (!(this.y == 402))
+        if (this.y != 402)
             this.y += 83;
+    }
+
+    // Checks if the player reaches the water
+    win() {
+        if (this.y < 70) {
+            return true;
+        }
+        else
+            return false;
+    }
+
+    reset() {
+        setTimeout(() => {
+            this.x = 202;
+            this.y = 402;
+        }, 300);
     }
 }
 
@@ -120,30 +133,19 @@ newGame();
 // Checks for collisions between the player and the enemies
 // Returns true if the player overlaps an enemy
 function checkCollision() {
+    let enemy;
     for (enemy of allEnemies) {
         if (player.x < enemy.x + 80 &&
             player.x + 80 > enemy.x &&
             player.y < enemy.y + 60 &&
             60 + player.y > enemy.y) {
-            setTimeout(() => {
-                // Resetting the player's location after collision
-                player.x = 202;
-                player.y = 402;
-            }, 200);
+            // Resetting the player's location after collision
+            player.reset();
             return true;
         }
 
     }
 
-}
-
-// Checks if the player reaches the water
-function win() {
-    if (player.y < 70) {
-        return true;
-    }
-    else
-        return false;
 }
 
 // This listens for key presses and sends the keys to

@@ -1,12 +1,14 @@
 body {
     text-align: center;
 }
+
 .centered {
     display: flex;
     flex-direction: column;
     width: 400px;
     margin: auto;
 }
+
 button {
     font-size: 1.5em;
     margin: 1em;

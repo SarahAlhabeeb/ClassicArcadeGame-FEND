@@ -13,6 +13,9 @@ Once a the player collides with an enemy, the game is reset and the player moves
 Once the player reaches the water (i.e., the top of the game board), the game is won.
 
 ### How to run
+Load this link in your browser https://sarahalhabeeb.github.io/ClassicArcadeGame-FEND/
+
+#### How to run locally
 - Download the zipped file or clone the project
 - Open the index page in the browser to play the game
 
