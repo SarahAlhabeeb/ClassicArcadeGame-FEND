@@ -19,6 +19,10 @@ Load this link in your browser https://sarahalhabeeb.github.io/ClassicArcadeGame
 - Download the zipped file or clone the project
 - Open the index page in the browser to play the game
 
+
+### The starter code
+provided from Udacity: [here](https://github.com/udacity/frontend-nanodegree-arcade-game)
+
 #### References
 The third-party resources that helped in some how in this project:
   * [1](https://www.sitepoint.com/quick-tip-game-loop-in-javascript/)
